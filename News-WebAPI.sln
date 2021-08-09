@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "News-WebAPI", "News-WebAPI\News-WebAPI.csproj", "{F3E91A2E-4666-4AB9-B893-38D7922738EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "News-WebAPI", "News-WebAPI\News-WebAPI.csproj", "{F3E91A2E-4666-4AB9-B893-38D7922738EA}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB-News", "DB-News\DB-News.sqlproj", "{D19175FF-696A-41AD-9769-28BD55382D6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsManager-ForAPI", "NewsManager-ForAPI\NewsManager-ForAPI.csproj", "{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{D19175FF-696A-41AD-9769-28BD55382D6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D19175FF-696A-41AD-9769-28BD55382D6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D19175FF-696A-41AD-9769-28BD55382D6D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
