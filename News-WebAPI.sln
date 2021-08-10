@@ -9,6 +9,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB-News", "DB-News\DB-News.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsManager-ForAPI", "NewsManager-ForAPI\NewsManager-ForAPI.csproj", "{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "WiewModel\ViewModel.csproj", "{71E95287-55A6-4580-B029-B727AB533CAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B96B5AD-ED0B-47F0-B54B-5BB09270876B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71E95287-55A6-4580-B029-B727AB533CAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71E95287-55A6-4580-B029-B727AB533CAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71E95287-55A6-4580-B029-B727AB533CAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71E95287-55A6-4580-B029-B727AB533CAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

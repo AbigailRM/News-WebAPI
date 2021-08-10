@@ -25,7 +25,11 @@ namespace News_WebAPI.Models
         [Column("UserID")]
         public int UserId { get; set; }
         [StringLength(255)]
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public string Password { get; set; }
         [Column("StateID")]
         public int? StateId { get; set; }

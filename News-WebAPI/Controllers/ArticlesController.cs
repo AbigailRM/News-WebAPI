@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace News_WebAPI.Controllers
 
         // GET: api/Articles
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticles()
         {
             var articles_ = await (from articles in _context.Articles
@@ -51,6 +53,7 @@ namespace News_WebAPI.Controllers
 
         // GET: api/Articles/5
         [HttpGet("{q}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Article>> GetArticle(string q)
         {
             var article_ = await (from articles in _context.Articles
@@ -72,7 +75,7 @@ namespace News_WebAPI.Controllers
                                       articles.UrltoImage,
                                       articles.PublishedAt,
                                       Category = category.Name
-                                  }).FirstOrDefaultAsync(x => x.Title == q);
+                                  }).FirstOrDefaultAsync(x => x.Title.Contains(q));
 
             if (article_ == null)
             {
@@ -81,6 +84,7 @@ namespace News_WebAPI.Controllers
 
             return Ok(article_);
         }
+
 
         // PUT: api/Articles/5
         [HttpPut("{id}")]

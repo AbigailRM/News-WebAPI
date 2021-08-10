@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace NewsManager_ForAPI
 {
-    public partial class Menu : Form
+    public partial class FrmSources : Form
     {
-        public Menu()
+        public FrmSources()
         {
             InitializeComponent();
-        }
-
-        private void goToArticles_Click(object sender, EventArgs e)
-        {
-            FrmArticles articles = new FrmArticles();
-            articles.ShowDialog();
-            this.Hide();
         }
     }
 }
