@@ -57,6 +57,7 @@ namespace NewsManager_ForAPI
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.MediumPurple;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(11, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 33);
@@ -103,6 +104,7 @@ namespace NewsManager_ForAPI
             this.ptrFindArticle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptrFindArticle.TabIndex = 31;
             this.ptrFindArticle.TabStop = false;
+            this.ptrFindArticle.Click += new System.EventHandler(this.ptrFindArticle_Click);
             // 
             // dgvShowArticles
             // 

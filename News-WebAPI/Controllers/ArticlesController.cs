@@ -34,10 +34,15 @@ namespace News_WebAPI.Controllers
                                    on articles.CategoryId equals category.CategoryId
                                    join source in _context.Sources
                                    on articles.SourceId equals source.SourceId
+                                   join country in _context.Countries
+                                   on articles.CountryId equals country.CountryId
+                                   join language in _context.Languages
+                                   on articles.LanguageId equals language.LanguageId
                                    select new
-                                   {                                       
+                                   {
                                        articles.ArticleId,
                                        Source = source.NameSource,
+                                       AutorId = articles.AuthorId,
                                        Author = authors.Name + " " + authors.LastName,
                                        articles.Title,
                                        articles.Description,
@@ -45,17 +50,27 @@ namespace News_WebAPI.Controllers
                                        articles.UrltoArticle,
                                        articles.UrltoImage,
                                        articles.PublishedAt,
-                                       Category = category.Name,
+                                       articles.CategoryId,
+                                       CategoryName = category.Name,
+                                       articles.CountryId,
+                                       CountryCode = country.CountryCode,
+                                       CountryName = country.Name,
+                                       articles.LanguageId,
+                                       LanguageCode = language.LanguageCode,
+                                       LanguageName = language.Name,
                                        articles.StateId
                                    }).Where(x => x.StateId == 1).ToListAsync();
             return Ok(articles_);
         }
 
         // GET: api/Articles/5
-        [HttpGet("{q}")]
+        [HttpGet("{q}/{coun}/{Cat}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Article>> GetArticle(string q)
+        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ string coun=null, /*[FromQuery] */string cat=null)
         {
+
+            //if (q!=null)
+            //{
             var article_ = await (from articles in _context.Articles
                                   join authors in _context.Authors
                                   on articles.AuthorId equals authors.AuthorId
@@ -63,10 +78,13 @@ namespace News_WebAPI.Controllers
                                   on articles.CategoryId equals category.CategoryId
                                   join source in _context.Sources
                                   on articles.SourceId equals source.SourceId
+                                  join country in _context.Countries
+                                  on articles.CountryId equals country.CountryId
                                   select new
                                   {
                                       articles.ArticleId,
                                       Source = source.NameSource,
+                                      AutorId = articles.AuthorId,
                                       Author = authors.Name + " " + authors.LastName,
                                       articles.Title,
                                       articles.Description,
@@ -74,8 +92,45 @@ namespace News_WebAPI.Controllers
                                       articles.UrltoArticle,
                                       articles.UrltoImage,
                                       articles.PublishedAt,
-                                      Category = category.Name
-                                  }).FirstOrDefaultAsync(x => x.Title.Contains(q));
+                                      CategoryId = category.CategoryId,
+                                      CategoryName = category.Name,
+                                      CountryId = country.CountryId,
+                                      CountryCode = country.CountryCode,
+
+                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q) : coun != null ? x.CountryCode == coun : x.CategoryName == cat);
+
+                
+            //}
+            //else if (coun !=null)
+            //{
+            //    var article_ = await (from articles in _context.Articles
+            //                          join authors in _context.Authors
+            //                          on articles.AuthorId equals authors.AuthorId
+            //                          join category in _context.Categories
+            //                          on articles.CategoryId equals category.CategoryId
+            //                          join source in _context.Sources
+            //                          on articles.SourceId equals source.SourceId
+            //                          
+            //                          select new
+            //                          {
+            //                              articles.ArticleId,
+            //                              Source = source.NameSource,
+            //                              Author = authors.Name + " " + authors.LastName,
+            //                              articles.Title,
+            //                              articles.Description,
+            //                              articles.Content,
+            //                              articles.UrltoArticle,
+            //                              articles.UrltoImage,
+            //                              articles.PublishedAt,
+            //                              Category = category.Name,
+            //                          }).FirstOrDefaultAsync(x => x.Country == coun);
+            //    //if (article_ == null)
+            //    //{
+            //    //    return NotFound();
+            //    //}
+
+            //    //return Ok(article_);
+            //}
 
             if (article_ == null)
             {
@@ -83,6 +138,7 @@ namespace News_WebAPI.Controllers
             }
 
             return Ok(article_);
+
         }
 
 
