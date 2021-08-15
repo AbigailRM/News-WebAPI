@@ -115,6 +115,7 @@ namespace NewsManager_ForAPI
             this.dgvShowArticles.RowTemplate.Height = 24;
             this.dgvShowArticles.Size = new System.Drawing.Size(1086, 391);
             this.dgvShowArticles.TabIndex = 32;
+            this.dgvShowArticles.DoubleClick += new System.EventHandler(this.SendToModify_CellDoubleClick);
             // 
             // FrmConsultArticles
             // 

@@ -68,7 +68,7 @@ namespace News_WebAPI.Controllers
         [ActionName(nameof(GetArticle))]
         [HttpGet("{q}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ int coun=0, /*[FromQuery] */int cat=0)
+        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ string coun = null, /*[FromQuery] */string cat=null, int Id = 0)
         {
 
             var article_ = await (from articles in _context.Articles
@@ -97,7 +97,7 @@ namespace News_WebAPI.Controllers
                                       CountryId = country.CountryId,
                                       CountryCode = country.CountryCode,
 
-                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q) : coun != 0 ? x.CountryId == coun : x.CategoryId == cat);
+                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q): Id != 0? x.ArticleId == Id : coun != null ? x.CountryCode == coun : cat !=null? x.CategoryName == cat: x.Title=="");
 
                 
             if (article_ == null)
@@ -164,7 +164,7 @@ namespace News_WebAPI.Controllers
                 StateId = 1
             };
 
-            await _context.Articles.AddAsync(_article);
+            _context.Articles.Add(_article);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetArticle), new { q = _article.Title}, _article);

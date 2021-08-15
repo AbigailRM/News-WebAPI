@@ -56,11 +56,11 @@ namespace NewsManager_ForAPI
             this.txtURLArticle = new System.Windows.Forms.TextBox();
             this.txtContent = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pboxClean = new System.Windows.Forms.PictureBox();
             this.lbSeeArticles = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetArticles)).BeginInit();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxClean)).BeginInit();
             this.SuspendLayout();
             // 
             // ptrGetArticles
@@ -72,7 +72,7 @@ namespace NewsManager_ForAPI
             this.ptrGetArticles.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptrGetArticles.TabIndex = 1;
             this.ptrGetArticles.TabStop = false;
-            this.ptrGetArticles.Click += new System.EventHandler(this.ptrGetArticles_Click);
+            this.ptrGetArticles.Click += new System.EventHandler(this.PtrGetArticles_Click);
             // 
             // label1
             // 
@@ -317,15 +317,17 @@ namespace NewsManager_ForAPI
             this.btnSave.UseVisualStyleBackColor = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // pictureBox2
+            // pboxClean
             // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(1091, 106);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(46, 41);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 29;
-            this.pictureBox2.TabStop = false;
+            this.pboxClean.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pboxClean.Image = ((System.Drawing.Image)(resources.GetObject("pboxClean.Image")));
+            this.pboxClean.Location = new System.Drawing.Point(1091, 106);
+            this.pboxClean.Name = "pboxClean";
+            this.pboxClean.Size = new System.Drawing.Size(46, 41);
+            this.pboxClean.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pboxClean.TabIndex = 29;
+            this.pboxClean.TabStop = false;
+            this.pboxClean.Click += new System.EventHandler(this.pboxClean_Click);
             // 
             // lbSeeArticles
             // 
@@ -339,8 +341,8 @@ namespace NewsManager_ForAPI
             this.lbSeeArticles.Size = new System.Drawing.Size(141, 19);
             this.lbSeeArticles.TabIndex = 30;
             this.lbSeeArticles.Text = "See Articles";
-            this.lbSeeArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label12_MouseClick);
-            this.lbSeeArticles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbSeeArticles_MouseClick);
+            this.lbSeeArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
+            this.lbSeeArticles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
             // 
             // FrmArticles
             // 
@@ -348,7 +350,7 @@ namespace NewsManager_ForAPI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(1149, 635);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pboxClean);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtContent);
             this.Controls.Add(this.txtURLArticle);
@@ -377,7 +379,7 @@ namespace NewsManager_ForAPI
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetArticles)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pboxClean)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -411,7 +413,7 @@ namespace NewsManager_ForAPI
         private System.Windows.Forms.TextBox txtURLArticle;
         private System.Windows.Forms.TextBox txtContent;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pboxClean;
         private System.Windows.Forms.Label lbSeeArticles;
     }
 }

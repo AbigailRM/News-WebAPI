@@ -12,13 +12,14 @@ using System.Net;
 using System.IO;
 using Newtonsoft.Json;
 using ViewModel;
-using System.Globalization;
 
 namespace NewsManager_ForAPI
 {
     public partial class FrmArticles : Form
     {
-        static HttpClient httpClient = new HttpClient();        
+        static readonly HttpClient httpClient = new HttpClient();
+
+        ArticlesDto objArticle = null;
 
         public FrmArticles()
         {
@@ -34,55 +35,53 @@ namespace NewsManager_ForAPI
             GetCountries();
             GetLanguages();
             GetSources();
+
+            btnDelete.Enabled = false;
             
         }
 
-        private void ptrGetArticles_Click(object sender, EventArgs e)
+        private void PtrGetArticles_Click(object sender, EventArgs e)
         {
             
         }
 
-        private void Save()
+        
+        private void SeeArticles_MouseClick(object sender, MouseEventArgs e)
         {
-            var articles = new ArticlesDto
-            {
-                Title = txtTitle.Text,
-                AuthorId = cbAuthor.SelectedIndex,
-                Description = txtDescription.Text,
-                Content = txtContent.Text,
-                UrltoArticle = txtURLArticle.Text,
-                UrltoImage = txtURLImage.Text,
-                PublishedAt = DateTime.Now,
-                SourceId = cbSource.SelectedIndex,
-                CategoryId = cbCategory.SelectedIndex,
-                CountryId = cbCountry.SelectedIndex,
-                LanguageId = cbLanguage.SelectedIndex,
-                UserId = 1,
-                CreateDate = DateTime.Now
-            };
 
-            string json = JsonConvert.SerializeObject(articles);
-
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = httpClient.PostAsync("/api/Articles", content).Result;
-
-            if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
-            {
-                MessageBox.Show("Article Was Inserted Correctly!");
-            }
-            else
-            {
-                MessageBox.Show("¡Something Was Wrong With This Action!");
-            }
-        }
-
-        private void label12_MouseClick(object sender, MouseEventArgs e)
-        {
             FrmConsultArticles consultArticles = new FrmConsultArticles();
             consultArticles.ShowDialog();
-            this.Close();
+
+            if (consultArticles.articleId != 0)
+                LoadArticle(consultArticles.articleId);
         }
+
+        private void LoadArticle(int articleId)
+        {
+            btnDelete.Enabled = true;
+
+            var response = httpClient.GetAsync("/api/Articles/null/0/0/"+articleId.ToString()).Result;
+            var resText = response.Content.ReadAsStringAsync().Result;
+
+            objArticle = JsonConvert.DeserializeObject<ArticlesDto>(resText);
+
+            txtContent.Text = objArticle.Content;
+            txtDescription.Text = objArticle.Description;
+            txtTitle.Text = objArticle.Title;
+            txtURLArticle.Text = objArticle.UrltoArticle;
+            txtURLImage.Text = objArticle.UrltoImage;
+
+            cbAuthor.SelectedValue = objArticle.AuthorId;
+            cbCategory.SelectedValue = objArticle.CategoryId;
+            cbCountry.SelectedValue = objArticle.CountryId;
+            cbLanguage.SelectedValue = objArticle.LanguageId;
+            cbSource.SelectedValue = objArticle.SourceId;
+
+        }
+
+        
+
+        //Metodos para llenar los ComboBox
 
         private void GetAuthors()
         {
@@ -103,7 +102,6 @@ namespace NewsManager_ForAPI
             cbAuthor.DisplayMember = "Name";
             cbAuthor.ValueMember = "AuthorId";
 
-            //httpClient.Dispose();
         }
 
 
@@ -171,6 +169,106 @@ namespace NewsManager_ForAPI
 
         }
 
+
+
+        //Los metodos a continuación son para realizar el CRUD en la tabla de Articles
+
+        private void Clean()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                    c.Text = " ";
+                if (c is ComboBox)
+                    ((ComboBox)c).SelectedIndex = 0;
+
+            }
+
+            btnDelete.Enabled = false;
+        }
+
+        private void Save()
+        {
+            if (objArticle == null)
+            {
+                var articles = new ArticlesDto
+                {
+                    Title = txtTitle.Text,
+                    AuthorId = cbAuthor.SelectedIndex,
+                    Description = txtDescription.Text,
+                    Content = txtContent.Text,
+                    UrltoArticle = txtURLArticle.Text,
+                    UrltoImage = txtURLImage.Text,
+                    PublishedAt = DateTime.Now,
+                    SourceId = cbSource.SelectedIndex,
+                    CategoryId = cbCategory.SelectedIndex,
+                    CountryId = cbCountry.SelectedIndex,
+                    LanguageId = cbLanguage.SelectedIndex,
+                    UserId = 1,
+                    CreateDate = DateTime.Now
+                };
+
+                string json = JsonConvert.SerializeObject(articles);
+
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = httpClient.PostAsync("/api/Articles", content).Result;
+
+                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                {
+                    MessageBox.Show("Article Was Inserted Correctly!");
+
+                    Clean();
+                }
+                else
+                {
+                    MessageBox.Show("¡Something Was Wrong With This Action!");
+                }
+            }
+            else
+            {
+                objArticle.Title = txtTitle.Text;
+                objArticle.AuthorId = cbAuthor.SelectedIndex;
+                objArticle.Description = txtDescription.Text;
+                objArticle.Content = txtContent.Text;
+                objArticle.UrltoArticle = txtURLArticle.Text;
+                objArticle.UrltoImage = txtURLImage.Text;
+                objArticle.PublishedAt = DateTime.Now;
+                objArticle.SourceId = cbSource.SelectedIndex;
+                objArticle.CategoryId = cbCategory.SelectedIndex;
+                objArticle.CountryId = cbCountry.SelectedIndex;
+                objArticle.LanguageId = cbLanguage.SelectedIndex;
+                objArticle.UserId = 1;
+                objArticle.CreateDate = DateTime.Now;
+
+
+                string json = JsonConvert.SerializeObject(objArticle);
+
+                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                var response = httpClient.PutAsync("/api/Articles/" + objArticle.ArticleId.ToString(), content).Result;
+
+                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                {
+                    MessageBox.Show("Article Was Inserted Correctly!");
+
+                    Clean();
+                }
+                else
+                {
+                    MessageBox.Show("¡Something Was Wrong With This Action!");
+                }
+            }
+
+            
+        }
+
+        private void Delete()
+        {
+
+        }
+
+
         private void lbSeeArticles_MouseClick(object sender, MouseEventArgs e)
         {
             lbSeeArticles.ForeColor = Color.Aqua;
@@ -179,6 +277,11 @@ namespace NewsManager_ForAPI
         private void btnSave_Click(object sender, EventArgs e)
         {
             Save();
+        }
+
+        private void pboxClean_Click(object sender, EventArgs e)
+        {
+            Clean();
         }
     }
 }
