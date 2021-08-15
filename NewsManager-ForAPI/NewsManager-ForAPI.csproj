@@ -55,7 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models Dto\ArticlesDto.cs" />
     <Compile Include="FrmArticles.cs">
       <SubType>Form</SubType>
     </Compile>

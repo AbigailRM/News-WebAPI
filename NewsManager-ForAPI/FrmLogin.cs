@@ -12,6 +12,7 @@ using System.Web.Http;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using ViewModel;
+using System.Configuration;
 
 namespace NewsManager_ForAPI
 {
@@ -22,7 +23,7 @@ namespace NewsManager_ForAPI
         public FrmLogin()
         {
             InitializeComponent();
-
+            //string url = ConfigurationSettings.AppSettings.["BaseURL"].ToString();
             httpClient.BaseAddress = new Uri("https://localhost:44344/");
 
         }

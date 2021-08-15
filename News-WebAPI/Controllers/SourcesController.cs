@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News_WebAPI.Data;
+using Microsoft.AspNetCore.Authorization;
 using News_WebAPI.Models;
 
 namespace News_WebAPI.Controllers
@@ -23,6 +24,7 @@ namespace News_WebAPI.Controllers
 
         // GET: api/Sources
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Source>>> GetSources()
         {
             return await _context.Sources.ToListAsync();

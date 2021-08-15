@@ -6,57 +6,55 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News_WebAPI.Data;
-using Microsoft.AspNetCore.Authorization;
 using News_WebAPI.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace News_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CountriesController : ControllerBase
+    public class LanguagesController : ControllerBase
     {
         private readonly NewsServerContext _context;
 
-        public CountriesController(NewsServerContext context)
+        public LanguagesController(NewsServerContext context)
         {
             _context = context;
         }
 
-        // GET: api/Countries
+        // GET: api/Languages
         [HttpGet]
-        //[Authorize]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<Language>>> GetLanguages()
         {
-            return await _context.Countries.ToListAsync();
+            return await _context.Languages.ToListAsync();
         }
 
-        //// GET: api/Countries/5
+        // GET: api/Languages/5
         //[HttpGet("{id}")]
-        //public async Task<ActionResult<Country>> GetCountry(int id)
+        //public async Task<ActionResult<Language>> GetLanguage(int id)
         //{
-        //    var country = await _context.Countries.FindAsync(id);
+        //    var language = await _context.Languages.FindAsync(id);
 
-        //    if (country == null)
+        //    if (language == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return country;
+        //    return language;
         //}
 
-        //// PUT: api/Countries/5
+        //// PUT: api/Languages/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCountry(int id, Country country)
+        //public async Task<IActionResult> PutLanguage(int id, Language language)
         //{
-        //    if (id != country.CountryId)
+        //    if (id != language.LanguageId)
         //    {
         //        return BadRequest();
         //    }
 
-        //    _context.Entry(country).State = EntityState.Modified;
+        //    _context.Entry(language).State = EntityState.Modified;
 
         //    try
         //    {
@@ -64,7 +62,7 @@ namespace News_WebAPI.Controllers
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!CountryExists(id))
+        //        if (!LanguageExists(id))
         //        {
         //            return NotFound();
         //        }
@@ -77,36 +75,36 @@ namespace News_WebAPI.Controllers
         //    return NoContent();
         //}
 
-        //// POST: api/Countries
+        //// POST: api/Languages
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Country>> PostCountry(Country country)
+        //public async Task<ActionResult<Language>> PostLanguage(Language language)
         //{
-        //    _context.Countries.Add(country);
+        //    _context.Languages.Add(language);
         //    await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetCountry", new { id = country.CountryId }, country);
+        //    return CreatedAtAction("GetLanguage", new { id = language.LanguageId }, language);
         //}
 
-        //// DELETE: api/Countries/5
+        //// DELETE: api/Languages/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteCountry(int id)
+        //public async Task<IActionResult> DeleteLanguage(int id)
         //{
-        //    var country = await _context.Countries.FindAsync(id);
-        //    if (country == null)
+        //    var language = await _context.Languages.FindAsync(id);
+        //    if (language == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Countries.Remove(country);
+        //    _context.Languages.Remove(language);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        //private bool CountryExists(int id)
+        //private bool LanguageExists(int id)
         //{
-        //    return _context.Countries.Any(e => e.CountryId == id);
+        //    return _context.Languages.Any(e => e.LanguageId == id);
         //}
     }
 }

@@ -19,7 +19,7 @@ namespace NewsManager_ForAPI
     {
         string url = "https://localhost:44344/api/Articles";
 
-        static HttpClient httpClient = new HttpClient();
+        private static readonly HttpClient httpClient = new HttpClient();
         List<ArticlesDto> articles;
 
         public FrmConsultArticles()
@@ -53,8 +53,10 @@ namespace NewsManager_ForAPI
             await GetArticles();
 
             var list = (from x in articles
-                        where x.Title.ToLower().Contains(txtSearchBox.Text.ToLower())
+                        where x.CategoryName.ToLower().Contains(txtSearchBox.Text.ToLower())
                         || x.Author.ToLower().Contains(txtSearchBox.Text.ToLower())
+                        || x.CountryName.ToLower().Contains(txtSearchBox.Text.ToLower())
+                        || x.LanguageName.ToLower().Contains(txtSearchBox.Text.ToLower())
                         select new
                         {
                             Article_ID = x.ArticleId,
@@ -86,31 +88,9 @@ namespace NewsManager_ForAPI
             return await stream.ReadToEndAsync();
         }
 
-        private async void ptrFindArticle_Click(object sender, EventArgs e)
+        private void ptrFindArticle_Click(object sender, EventArgs e)
         {
             LoadGrid();
-            //await GetArticles();
-
-            //var list = (from x in articles
-            //            where x.Title.ToLower().Contains(txtSearchBox.Text.ToLower())
-            //            || x.Author.ToLower().Contains(txtSearchBox.Text.ToLower())
-            //            select new
-            //            {
-            //                Article_ID = x.ArticleId,
-            //                Author = x.Author,
-            //                Title = x.Title,
-            //                Description = x.Description,
-            //                Content = x.Content,
-            //                Url_To_Article = x.UrltoArticle,
-            //                Url_To_Image = x.UrltoImage,
-            //                Published_At = x.PublishedAt,
-            //                Category = x.CategoryName,
-            //                Country = x.CountryName,
-            //                Language = x.LanguageName
-            //            })
-
-            //dgvShowArticles.DataSource = list;
-            //dgvShowArticles.Columns[0].Visible = false;
         }
     }
 }

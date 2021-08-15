@@ -46,9 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArticlesDto.cs" />
+    <Compile Include="AuthorsDto.cs" />
+    <Compile Include="CategoriesDto.cs" />
+    <Compile Include="CountriesDto.cs" />
     <Compile Include="CredentialResponse.cs" />
     <Compile Include="GlobalObjects.cs" />
+    <Compile Include="LanguagesDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SourceDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

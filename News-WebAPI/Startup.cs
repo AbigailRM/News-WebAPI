@@ -90,6 +90,7 @@ namespace News_WebAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "News_WebAPI", Version = "v1" });
+                //c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
             });
         }
 

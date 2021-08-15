@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News_WebAPI.Data;
 using News_WebAPI.Models;
+using Microsoft.AspNetCore.Authorization;
+
 
 namespace News_WebAPI.Controllers
 {
@@ -25,6 +27,7 @@ namespace News_WebAPI.Controllers
         // GET: api/Authors
         [HttpGet]
         //[Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
             return await _context.Authors.ToListAsync();

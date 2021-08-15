@@ -170,7 +170,7 @@ namespace News_WebAPI.Data
 
             modelBuilder.Entity<Source>(entity =>
             {
-                entity.Property(e => e.NameSource).IsUnicode(false);
+                entity.Property(e => e.SourceName).IsUnicode(false);
 
                 entity.HasOne(d => d.State)
                     .WithMany(p => p.Sources)

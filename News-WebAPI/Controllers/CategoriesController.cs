@@ -6,57 +6,55 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using News_WebAPI.Data;
-using Microsoft.AspNetCore.Authorization;
 using News_WebAPI.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace News_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CountriesController : ControllerBase
+    public class CategoriesController : ControllerBase
     {
         private readonly NewsServerContext _context;
 
-        public CountriesController(NewsServerContext context)
+        public CategoriesController(NewsServerContext context)
         {
             _context = context;
         }
 
-        // GET: api/Countries
+        // GET: api/Categories
         [HttpGet]
-        //[Authorize]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<Country>>> GetCountries()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _context.Countries.ToListAsync();
+            return await _context.Categories.ToListAsync();
         }
 
-        //// GET: api/Countries/5
+        // GET: api/Categories/5
         //[HttpGet("{id}")]
-        //public async Task<ActionResult<Country>> GetCountry(int id)
+        //public async Task<ActionResult<Category>> GetCategory(int id)
         //{
-        //    var country = await _context.Countries.FindAsync(id);
+        //    var category = await _context.Categories.FindAsync(id);
 
-        //    if (country == null)
+        //    if (category == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    return country;
+        //    return category;
         //}
 
-        //// PUT: api/Countries/5
+        //// PUT: api/Categories/5
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPut("{id}")]
-        //public async Task<IActionResult> PutCountry(int id, Country country)
+        //public async Task<IActionResult> PutCategory(int id, Category category)
         //{
-        //    if (id != country.CountryId)
+        //    if (id != category.CategoryId)
         //    {
         //        return BadRequest();
         //    }
 
-        //    _context.Entry(country).State = EntityState.Modified;
+        //    _context.Entry(category).State = EntityState.Modified;
 
         //    try
         //    {
@@ -64,7 +62,7 @@ namespace News_WebAPI.Controllers
         //    }
         //    catch (DbUpdateConcurrencyException)
         //    {
-        //        if (!CountryExists(id))
+        //        if (!CategoryExists(id))
         //        {
         //            return NotFound();
         //        }
@@ -77,36 +75,36 @@ namespace News_WebAPI.Controllers
         //    return NoContent();
         //}
 
-        //// POST: api/Countries
+        //// POST: api/Categories
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Country>> PostCountry(Country country)
+        //public async Task<ActionResult<Category>> PostCategory(Category category)
         //{
-        //    _context.Countries.Add(country);
+        //    _context.Categories.Add(category);
         //    await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction("GetCountry", new { id = country.CountryId }, country);
+        //    return CreatedAtAction("GetCategory", new { id = category.CategoryId }, category);
         //}
 
-        //// DELETE: api/Countries/5
+        //// DELETE: api/Categories/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteCountry(int id)
+        //public async Task<IActionResult> DeleteCategory(int id)
         //{
-        //    var country = await _context.Countries.FindAsync(id);
-        //    if (country == null)
+        //    var category = await _context.Categories.FindAsync(id);
+        //    if (category == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Countries.Remove(country);
+        //    _context.Categories.Remove(category);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        //private bool CountryExists(int id)
+        //private bool CategoryExists(int id)
         //{
-        //    return _context.Countries.Any(e => e.CountryId == id);
+        //    return _context.Categories.Any(e => e.CategoryId == id);
         //}
     }
 }

@@ -25,6 +25,7 @@ namespace News_WebAPI.Controllers
         // GET: api/Articles
         [HttpGet]
         [AllowAnonymous]
+        //[Authorize("Bearer")]
         public async Task<ActionResult<IEnumerable<Article>>> GetArticles()
         {
             var articles_ = await (from articles in _context.Articles
@@ -41,7 +42,7 @@ namespace News_WebAPI.Controllers
                                    select new
                                    {
                                        articles.ArticleId,
-                                       Source = source.NameSource,
+                                       Source = source.SourceName,
                                        AutorId = articles.AuthorId,
                                        Author = authors.Name + " " + authors.LastName,
                                        articles.Title,
@@ -64,13 +65,12 @@ namespace News_WebAPI.Controllers
         }
 
         // GET: api/Articles/5
-        [HttpGet("{q}/{coun}/{Cat}")]
+        [ActionName(nameof(GetArticle))]
+        [HttpGet("{q}")]
         [AllowAnonymous]
-        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ string coun=null, /*[FromQuery] */string cat=null)
+        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ int coun=0, /*[FromQuery] */int cat=0)
         {
 
-            //if (q!=null)
-            //{
             var article_ = await (from articles in _context.Articles
                                   join authors in _context.Authors
                                   on articles.AuthorId equals authors.AuthorId
@@ -83,7 +83,7 @@ namespace News_WebAPI.Controllers
                                   select new
                                   {
                                       articles.ArticleId,
-                                      Source = source.NameSource,
+                                      Source = source.SourceName,
                                       AutorId = articles.AuthorId,
                                       Author = authors.Name + " " + authors.LastName,
                                       articles.Title,
@@ -97,41 +97,9 @@ namespace News_WebAPI.Controllers
                                       CountryId = country.CountryId,
                                       CountryCode = country.CountryCode,
 
-                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q) : coun != null ? x.CountryCode == coun : x.CategoryName == cat);
+                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q) : coun != 0 ? x.CountryId == coun : x.CategoryId == cat);
 
                 
-            //}
-            //else if (coun !=null)
-            //{
-            //    var article_ = await (from articles in _context.Articles
-            //                          join authors in _context.Authors
-            //                          on articles.AuthorId equals authors.AuthorId
-            //                          join category in _context.Categories
-            //                          on articles.CategoryId equals category.CategoryId
-            //                          join source in _context.Sources
-            //                          on articles.SourceId equals source.SourceId
-            //                          
-            //                          select new
-            //                          {
-            //                              articles.ArticleId,
-            //                              Source = source.NameSource,
-            //                              Author = authors.Name + " " + authors.LastName,
-            //                              articles.Title,
-            //                              articles.Description,
-            //                              articles.Content,
-            //                              articles.UrltoArticle,
-            //                              articles.UrltoImage,
-            //                              articles.PublishedAt,
-            //                              Category = category.Name,
-            //                          }).FirstOrDefaultAsync(x => x.Country == coun);
-            //    //if (article_ == null)
-            //    //{
-            //    //    return NotFound();
-            //    //}
-
-            //    //return Ok(article_);
-            //}
-
             if (article_ == null)
             {
                 return NotFound();
@@ -174,12 +142,33 @@ namespace News_WebAPI.Controllers
 
         // POST: api/Articles
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Article>> PostArticle(Article article)
         {
-            _context.Articles.Add(article);
+            var _article = new Article
+            {
+                Title = article.Title,
+                AuthorId = article.AuthorId,
+                Description = article.Description,
+                Content = article.Content,
+                UrltoArticle = article.UrltoArticle,
+                UrltoImage = article.UrltoImage,
+                PublishedAt = article.PublishedAt,
+                SourceId = article.SourceId,
+                CategoryId = article.CategoryId,
+                CountryId = article.CountryId,
+                //Country = ,
+                LanguageId = article.LanguageId,
+                UserId = article.UserId,
+                CreateDate = DateTime.Now,
+                StateId = 1
+            };
+
+            await _context.Articles.AddAsync(_article);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetArticle", new { id = article.ArticleId }, article);
+            return CreatedAtAction(nameof(GetArticle), new { q = _article.Title}, _article);
+
         }
 
         // DELETE: api/Articles/5

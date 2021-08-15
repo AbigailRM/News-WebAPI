@@ -19,7 +19,7 @@ namespace News_WebAPI.Models
         [Column("SourceID")]
         public int SourceId { get; set; }
         [StringLength(30)]
-        public string NameSource { get; set; }
+        public string SourceName { get; set; }
         [Column("StateID")]
         public int? StateId { get; set; }
         [Column("UserID")]

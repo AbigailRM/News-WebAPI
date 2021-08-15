@@ -38,14 +38,14 @@ namespace NewsManager_ForAPI
             this.label2 = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.cmbAuthor = new System.Windows.Forms.ComboBox();
-            this.cmbSource = new System.Windows.Forms.ComboBox();
+            this.cbAuthor = new System.Windows.Forms.ComboBox();
+            this.cbSource = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.cmbCategory = new System.Windows.Forms.ComboBox();
+            this.cbCategory = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cmbLanguage = new System.Windows.Forms.ComboBox();
+            this.cbLanguage = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.cmbCountry = new System.Windows.Forms.ComboBox();
+            this.cbCountry = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@ namespace NewsManager_ForAPI
             this.txtContent = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.lbSeeArticles = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetArticles)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -87,6 +88,7 @@ namespace NewsManager_ForAPI
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.lbSeeArticles);
             this.panel1.Controls.Add(this.btnMenu);
             this.panel1.Controls.Add(this.ptrGetArticles);
             this.panel1.Controls.Add(this.btnDelete);
@@ -99,7 +101,7 @@ namespace NewsManager_ForAPI
             // btnMenu
             // 
             this.btnMenu.BackColor = System.Drawing.Color.MediumPurple;
-            this.btnMenu.Location = new System.Drawing.Point(11, 12);
+            this.btnMenu.Location = new System.Drawing.Point(11, 55);
             this.btnMenu.Name = "btnMenu";
             this.btnMenu.Size = new System.Drawing.Size(80, 33);
             this.btnMenu.TabIndex = 31;
@@ -145,23 +147,23 @@ namespace NewsManager_ForAPI
             this.label3.TabIndex = 8;
             this.label3.Text = "Author:";
             // 
-            // cmbAuthor
+            // cbAuthor
             // 
-            this.cmbAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbAuthor.FormattingEnabled = true;
-            this.cmbAuthor.Location = new System.Drawing.Point(572, 178);
-            this.cmbAuthor.Name = "cmbAuthor";
-            this.cmbAuthor.Size = new System.Drawing.Size(251, 28);
-            this.cmbAuthor.TabIndex = 9;
+            this.cbAuthor.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbAuthor.FormattingEnabled = true;
+            this.cbAuthor.Location = new System.Drawing.Point(572, 178);
+            this.cbAuthor.Name = "cbAuthor";
+            this.cbAuthor.Size = new System.Drawing.Size(251, 28);
+            this.cbAuthor.TabIndex = 9;
             // 
-            // cmbSource
+            // cbSource
             // 
-            this.cmbSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbSource.FormattingEnabled = true;
-            this.cmbSource.Location = new System.Drawing.Point(572, 246);
-            this.cmbSource.Name = "cmbSource";
-            this.cmbSource.Size = new System.Drawing.Size(251, 28);
-            this.cmbSource.TabIndex = 11;
+            this.cbSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbSource.FormattingEnabled = true;
+            this.cbSource.Location = new System.Drawing.Point(572, 246);
+            this.cbSource.Name = "cbSource";
+            this.cbSource.Size = new System.Drawing.Size(251, 28);
+            this.cbSource.TabIndex = 11;
             // 
             // label4
             // 
@@ -173,14 +175,14 @@ namespace NewsManager_ForAPI
             this.label4.TabIndex = 10;
             this.label4.Text = "Source:";
             // 
-            // cmbCategory
+            // cbCategory
             // 
-            this.cmbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCategory.FormattingEnabled = true;
-            this.cmbCategory.Location = new System.Drawing.Point(862, 178);
-            this.cmbCategory.Name = "cmbCategory";
-            this.cmbCategory.Size = new System.Drawing.Size(251, 28);
-            this.cmbCategory.TabIndex = 13;
+            this.cbCategory.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCategory.FormattingEnabled = true;
+            this.cbCategory.Location = new System.Drawing.Point(862, 178);
+            this.cbCategory.Name = "cbCategory";
+            this.cbCategory.Size = new System.Drawing.Size(251, 28);
+            this.cbCategory.TabIndex = 13;
             // 
             // label5
             // 
@@ -192,14 +194,14 @@ namespace NewsManager_ForAPI
             this.label5.TabIndex = 12;
             this.label5.Text = "Category:";
             // 
-            // cmbLanguage
+            // cbLanguage
             // 
-            this.cmbLanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbLanguage.FormattingEnabled = true;
-            this.cmbLanguage.Location = new System.Drawing.Point(862, 246);
-            this.cmbLanguage.Name = "cmbLanguage";
-            this.cmbLanguage.Size = new System.Drawing.Size(251, 28);
-            this.cmbLanguage.TabIndex = 15;
+            this.cbLanguage.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbLanguage.FormattingEnabled = true;
+            this.cbLanguage.Location = new System.Drawing.Point(862, 246);
+            this.cbLanguage.Name = "cbLanguage";
+            this.cbLanguage.Size = new System.Drawing.Size(251, 28);
+            this.cbLanguage.TabIndex = 15;
             // 
             // label6
             // 
@@ -211,14 +213,14 @@ namespace NewsManager_ForAPI
             this.label6.TabIndex = 14;
             this.label6.Text = "Language:";
             // 
-            // cmbCountry
+            // cbCountry
             // 
-            this.cmbCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cmbCountry.FormattingEnabled = true;
-            this.cmbCountry.Location = new System.Drawing.Point(572, 314);
-            this.cmbCountry.Name = "cmbCountry";
-            this.cmbCountry.Size = new System.Drawing.Size(251, 28);
-            this.cmbCountry.TabIndex = 17;
+            this.cbCountry.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbCountry.FormattingEnabled = true;
+            this.cbCountry.Location = new System.Drawing.Point(572, 314);
+            this.cbCountry.Name = "cbCountry";
+            this.cbCountry.Size = new System.Drawing.Size(251, 28);
+            this.cbCountry.TabIndex = 17;
             // 
             // label7
             // 
@@ -313,6 +315,7 @@ namespace NewsManager_ForAPI
             this.btnSave.TabIndex = 27;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // pictureBox2
             // 
@@ -323,6 +326,21 @@ namespace NewsManager_ForAPI
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 29;
             this.pictureBox2.TabStop = false;
+            // 
+            // lbSeeArticles
+            // 
+            this.lbSeeArticles.AutoSize = true;
+            this.lbSeeArticles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbSeeArticles.Font = new System.Drawing.Font("MingLiU_HKSCS-ExtB", 10.8F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+                | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbSeeArticles.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbSeeArticles.Location = new System.Drawing.Point(148, 69);
+            this.lbSeeArticles.Name = "lbSeeArticles";
+            this.lbSeeArticles.Size = new System.Drawing.Size(141, 19);
+            this.lbSeeArticles.TabIndex = 30;
+            this.lbSeeArticles.Text = "See Articles";
+            this.lbSeeArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label12_MouseClick);
+            this.lbSeeArticles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lbSeeArticles_MouseClick);
             // 
             // FrmArticles
             // 
@@ -340,15 +358,15 @@ namespace NewsManager_ForAPI
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.cmbCountry);
+            this.Controls.Add(this.cbCountry);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.cmbLanguage);
+            this.Controls.Add(this.cbLanguage);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.cmbCategory);
+            this.Controls.Add(this.cbCategory);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.cmbSource);
+            this.Controls.Add(this.cbSource);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.cmbAuthor);
+            this.Controls.Add(this.cbAuthor);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtTitle);
             this.Controls.Add(this.label2);
@@ -375,14 +393,14 @@ namespace NewsManager_ForAPI
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtTitle;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cmbAuthor;
-        private System.Windows.Forms.ComboBox cmbSource;
+        private System.Windows.Forms.ComboBox cbAuthor;
+        private System.Windows.Forms.ComboBox cbSource;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cmbCategory;
+        private System.Windows.Forms.ComboBox cbCategory;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbLanguage;
+        private System.Windows.Forms.ComboBox cbLanguage;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cmbCountry;
+        private System.Windows.Forms.ComboBox cbCountry;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
@@ -394,5 +412,6 @@ namespace NewsManager_ForAPI
         private System.Windows.Forms.TextBox txtContent;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Label lbSeeArticles;
     }
 }
