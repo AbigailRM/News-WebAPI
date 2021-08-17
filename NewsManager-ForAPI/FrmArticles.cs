@@ -195,7 +195,7 @@ namespace NewsManager_ForAPI
                     ((ComboBox)c).SelectedIndex = 0;
 
             }
-
+            objArticle = null;
             btnDelete.Enabled = false;
         }
 
@@ -260,9 +260,9 @@ namespace NewsManager_ForAPI
 
                 var response = httpClient.PutAsync("/api/Articles", content).Result;
 
-                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Article Was Updated Correctly!");
+                    MessageBox.Show("Article Was Updated!");
 
                     Clean();
                 }
@@ -277,7 +277,18 @@ namespace NewsManager_ForAPI
 
         private void Delete()
         {
+            var response = httpClient.DeleteAsync("/api/Articles/" + objArticle.ArticleId).Result;
 
+            if (response.StatusCode == HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.OK)
+            {
+                MessageBox.Show("Article Was Deleted!");
+
+                Clean();
+            }
+            else
+            {
+                MessageBox.Show("¡Something Was Wrong With This Action!");
+            }
         }
 
 
@@ -300,7 +311,12 @@ namespace NewsManager_ForAPI
         {
             Menu menu = new Menu();
             menu.ShowDialog();
-            this.Close();
+            Close();
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            Delete();
         }
     }
 }

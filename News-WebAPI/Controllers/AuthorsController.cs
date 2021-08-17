@@ -53,12 +53,14 @@ namespace News_WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> PutAuthor(Author author)
         {
+            _context.Entry(author).State = EntityState.Modified;
+
             try
             {
                 var author_ = await _context.Authors.Where(x => x.AuthorId == author.AuthorId).FirstOrDefaultAsync();
 
-                author_.Name = author.Name == null ? author_.Name : author.Name;
-                author_.LastName = author.LastName == null ? author_.LastName : author.LastName;
+                author_.Name = author.Name ?? author_.Name;
+                author_.LastName = author.LastName ?? author_.LastName;
                 author_.StateId = 1;
 
                 await _context.SaveChangesAsync();

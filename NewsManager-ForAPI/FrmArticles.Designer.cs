@@ -133,6 +133,7 @@ namespace NewsManager_ForAPI
             this.btnDelete.TabIndex = 28;
             this.btnDelete.Text = "DELETE";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // label2
             // 

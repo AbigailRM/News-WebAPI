@@ -79,6 +79,7 @@ namespace NewsManager_ForAPI
             this.btnMenu.TabIndex = 31;
             this.btnMenu.Text = "MENU";
             this.btnMenu.UseVisualStyleBackColor = false;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // btnDelete
             // 

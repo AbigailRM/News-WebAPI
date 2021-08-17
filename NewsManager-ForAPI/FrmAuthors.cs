@@ -77,7 +77,7 @@ namespace NewsManager_ForAPI
                     ((ComboBox)c).SelectedIndex = 0;
 
             }
-
+            objAuthor = null;
             btnDelete.Enabled = false;
         }
 
@@ -120,9 +120,9 @@ namespace NewsManager_ForAPI
 
                 var response = httpClient.PutAsync("/api/Authors", content).Result;
 
-                if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode == HttpStatusCode.NoContent || response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Article Was Updated Correctly!");
+                    MessageBox.Show("Author Was Updated!");
 
                     Clean();
                 }
@@ -182,6 +182,13 @@ namespace NewsManager_ForAPI
 
             btnDelete.Enabled = true;
 
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            Menu menu = new Menu();
+            menu.ShowDialog();
+            this.Close();
         }
     }
 }

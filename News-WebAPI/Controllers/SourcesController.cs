@@ -45,23 +45,24 @@ namespace News_WebAPI.Controllers
         }
 
         // PUT: api/Sources/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutSource(int id, Source source)
+        [HttpPut()]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutSource(Source source)
         {
-            if (id != source.SourceId)
-            {
-                return BadRequest();
-            }
-
             _context.Entry(source).State = EntityState.Modified;
 
             try
             {
+                var source_ = await _context.Sources.Where(x => x.SourceId == source.SourceId).FirstOrDefaultAsync();
+
+                source_.SourceName = source.SourceName ?? source_.SourceName;
+                source_.StateId = 1;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!SourceExists(id))
+                if (!SourceExists(source.SourceId))
                 {
                     return NotFound();
                 }
@@ -76,26 +77,45 @@ namespace News_WebAPI.Controllers
 
         // POST: api/Sources
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Source>> PostSource(Source source)
         {
-            _context.Sources.Add(source);
+            var source_ = new Source
+            {
+                SourceName = source.SourceName,
+                StateId = 1
+            };
+
+            _context.Sources.Add(source_);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSource", new { id = source.SourceId }, source);
+            return CreatedAtAction("GetSource", new { id = source_.SourceId }, source_);
         }
 
         // DELETE: api/Sources/5
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteSource(int id)
         {
-            var source = await _context.Sources.FindAsync(id);
-            if (source == null)
+            try
             {
-                return NotFound();
-            }
+                var source_ = await _context.Sources.Where(x => x.SourceId == id).FirstOrDefaultAsync();
 
-            _context.Sources.Remove(source);
-            await _context.SaveChangesAsync();
+                source_.StateId = 2;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SourceExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return NoContent();
         }

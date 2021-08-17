@@ -75,6 +75,7 @@ namespace NewsManager_ForAPI
             this.goToSources.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.goToSources.TabIndex = 2;
             this.goToSources.TabStop = false;
+            this.goToSources.Click += new System.EventHandler(this.goToSources_Click);
             // 
             // label1
             // 

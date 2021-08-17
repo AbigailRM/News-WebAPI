@@ -21,14 +21,21 @@ namespace NewsManager_ForAPI
         {
             FrmArticles articles = new FrmArticles();
             articles.ShowDialog();
-            this.Close();
+            Close();
         }
 
         private void goToAuthors_Click(object sender, EventArgs e)
         {
             FrmAuthors authors = new FrmAuthors();
             authors.ShowDialog();
-            this.Close();
+            Close();
+        }
+
+        private void goToSources_Click(object sender, EventArgs e)
+        {
+            FrmSources sources = new FrmSources();
+            sources.ShowDialog();
+            Close();
         }
     }
 }

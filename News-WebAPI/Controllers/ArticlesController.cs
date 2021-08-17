@@ -39,8 +39,6 @@ namespace News_WebAPI.Controllers
                                    on articles.CountryId equals country.CountryId
                                    join language in _context.Languages
                                    on articles.LanguageId equals language.LanguageId
-                                   join sort in _context.SortBies
-                                   on articles.SortId equals sort.SortId
                                    select new
                                    {
                                        articles.ArticleId,
@@ -62,8 +60,6 @@ namespace News_WebAPI.Controllers
                                        articles.LanguageId,
                                        LanguageCode = language.LanguageCode,
                                        LanguageName = language.Name,
-                                       articles.SortId,
-                                       Sort = sort.Name,
                                        articles.StateId
                                    }).Where(x => x.StateId == 1).ToListAsync();
             return Ok(articles_);
@@ -111,19 +107,19 @@ namespace News_WebAPI.Controllers
 
                 article_.ArticleId = article.ArticleId == 0 ? article_.ArticleId : article.ArticleId;
 
-                article_.Title = article.Title == null ? article_.Title : article.Title;
+                article_.Title = article.Title ?? article_.Title;
 
                 article_.AuthorId = article.AuthorId == 0 ? article_.AuthorId : article.AuthorId;
 
-                article_.Description = article.Description == null ? article_.Description : article.Description;
+                article_.Description = article.Description ?? article_.Description;
 
-                article_.Content = article.Content == null ? article_.Content : article.Content;
+                article_.Content = article.Content ?? article_.Content;
 
-                article_.UrltoArticle = article.UrltoArticle == null ? article_.UrltoArticle : article.UrltoArticle;
+                article_.UrltoArticle = article.UrltoArticle ?? article_.UrltoArticle;
 
-                article_.UrltoImage = article.UrltoImage == null ? article_.UrltoImage : article.UrltoImage;
+                article_.UrltoImage = article.UrltoImage ?? article_.UrltoImage;
 
-                article_.PublishedAt = article.PublishedAt == null ? article_.PublishedAt : article.PublishedAt;
+                article_.PublishedAt = article.PublishedAt != null ? article.PublishedAt : article_.PublishedAt;
 
                 article_.SourceId = article.SourceId == 0 ? article_.SourceId : article.SourceId;
 
@@ -135,7 +131,7 @@ namespace News_WebAPI.Controllers
 
                 article_.UserId = 1;
 
-                article_.CreateDate = article.CreateDate == null ? article_.CreateDate : article.CreateDate;
+                article_.CreateDate = article.CreateDate != null ? article.CreateDate : article_.CreateDate;
 
                 article_.StateId = 1;               
 
@@ -192,22 +188,12 @@ namespace News_WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticle(int id)
         {
-            //var article = await _context.Articles.FindAsync(id);
-            //if (article == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //_context.Articles.Remove(article);
-            //await _context.SaveChangesAsync();
-
-            //return NoContent();
 
             try
             {
                 var article_ = await _context.Articles.Where(x => x.ArticleId == id).FirstOrDefaultAsync();
 
-                article_.StateId = 1;
+                article_.StateId = 2;
 
                 await _context.SaveChangesAsync();
             }
