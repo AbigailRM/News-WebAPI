@@ -31,21 +31,21 @@ namespace NewsManager_ForAPI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAuthors));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ptrGetAuthors = new System.Windows.Forms.PictureBox();
             this.btnMenu = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.ptrGetAuthors = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.dgvAuthors = new System.Windows.Forms.DataGridView();
+            this.pbClean = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetAuthors)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAuthors)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClean)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -59,6 +59,16 @@ namespace NewsManager_ForAPI
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(960, 100);
             this.panel1.TabIndex = 6;
+            // 
+            // ptrGetAuthors
+            // 
+            this.ptrGetAuthors.Image = ((System.Drawing.Image)(resources.GetObject("ptrGetAuthors.Image")));
+            this.ptrGetAuthors.Location = new System.Drawing.Point(444, 3);
+            this.ptrGetAuthors.Name = "ptrGetAuthors";
+            this.ptrGetAuthors.Size = new System.Drawing.Size(69, 59);
+            this.ptrGetAuthors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ptrGetAuthors.TabIndex = 7;
+            this.ptrGetAuthors.TabStop = false;
             // 
             // btnMenu
             // 
@@ -79,6 +89,7 @@ namespace NewsManager_ForAPI
             this.btnDelete.TabIndex = 28;
             this.btnDelete.Text = "DELETE";
             this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // label1
             // 
@@ -90,16 +101,6 @@ namespace NewsManager_ForAPI
             this.label1.Size = new System.Drawing.Size(179, 24);
             this.label1.TabIndex = 4;
             this.label1.Text = "A U T H O R S";
-            // 
-            // ptrGetAuthors
-            // 
-            this.ptrGetAuthors.Image = ((System.Drawing.Image)(resources.GetObject("ptrGetAuthors.Image")));
-            this.ptrGetAuthors.Location = new System.Drawing.Point(444, 3);
-            this.ptrGetAuthors.Name = "ptrGetAuthors";
-            this.ptrGetAuthors.Size = new System.Drawing.Size(69, 59);
-            this.ptrGetAuthors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.ptrGetAuthors.TabIndex = 7;
-            this.ptrGetAuthors.TabStop = false;
             // 
             // label2
             // 
@@ -146,26 +147,29 @@ namespace NewsManager_ForAPI
             this.btnSave.TabIndex = 28;
             this.btnSave.Text = "SAVE";
             this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // dataGridView1
+            // dgvAuthors
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(27, 227);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(763, 236);
-            this.dataGridView1.TabIndex = 29;
+            this.dgvAuthors.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAuthors.Location = new System.Drawing.Point(27, 227);
+            this.dgvAuthors.Name = "dgvAuthors";
+            this.dgvAuthors.RowHeadersWidth = 51;
+            this.dgvAuthors.RowTemplate.Height = 24;
+            this.dgvAuthors.Size = new System.Drawing.Size(763, 236);
+            this.dgvAuthors.TabIndex = 29;
+            this.dgvAuthors.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.AuthorID_CellDoubleClick);
             // 
-            // pictureBox2
+            // pbClean
             // 
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(868, 108);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(46, 41);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox2.TabIndex = 30;
-            this.pictureBox2.TabStop = false;
+            this.pbClean.Image = ((System.Drawing.Image)(resources.GetObject("pbClean.Image")));
+            this.pbClean.Location = new System.Drawing.Point(868, 108);
+            this.pbClean.Name = "pbClean";
+            this.pbClean.Size = new System.Drawing.Size(46, 41);
+            this.pbClean.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pbClean.TabIndex = 30;
+            this.pbClean.TabStop = false;
+            this.pbClean.Click += new System.EventHandler(this.pbClean_Click);
             // 
             // FrmAuthors
             // 
@@ -173,8 +177,8 @@ namespace NewsManager_ForAPI
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(929, 475);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.pbClean);
+            this.Controls.Add(this.dgvAuthors);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtLastName);
             this.Controls.Add(this.label3);
@@ -183,11 +187,12 @@ namespace NewsManager_ForAPI
             this.Controls.Add(this.panel1);
             this.Name = "FrmAuthors";
             this.Text = "FrmAuthors";
+            this.Load += new System.EventHandler(this.FrmAuthors_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetAuthors)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAuthors)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbClean)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,7 +210,7 @@ namespace NewsManager_ForAPI
         private System.Windows.Forms.TextBox txtLastName;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.DataGridView dgvAuthors;
+        private System.Windows.Forms.PictureBox pbClean;
     }
 }

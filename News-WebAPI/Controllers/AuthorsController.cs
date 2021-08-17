@@ -30,14 +30,15 @@ namespace News_WebAPI.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return await _context.Authors.ToListAsync();
+            return await _context.Authors.Where(x => x.StateId == 1).ToListAsync();
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
+            var author = await _context.Authors.Where(x => x.AuthorId == id && x.StateId == 1).SingleOrDefaultAsync();
 
             if (author == null)
             {
@@ -48,23 +49,23 @@ namespace News_WebAPI.Controllers
         }
 
         // PUT: api/Authors/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(int id, Author author)
+        [HttpPut()]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutAuthor(Author author)
         {
-            if (id != author.AuthorId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(author).State = EntityState.Modified;
-
             try
             {
+                var author_ = await _context.Authors.Where(x => x.AuthorId == author.AuthorId).FirstOrDefaultAsync();
+
+                author_.Name = author.Name == null ? author_.Name : author.Name;
+                author_.LastName = author.LastName == null ? author_.LastName : author.LastName;
+                author_.StateId = 1;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AuthorExists(id))
+                if (!AuthorExists(author.AuthorId))
                 {
                     return NotFound();
                 }
@@ -79,26 +80,47 @@ namespace News_WebAPI.Controllers
 
         // POST: api/Authors
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<Author>> PostAuthor(Author author)
         {
-            _context.Authors.Add(author);
+            var author_ = new Author
+            {
+                Name = author.Name,
+                LastName = author.LastName,
+                StateId = 1,
+                UserId = author.UserId
+            };
+
+            _context.Authors.Add(author_);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAuthor", new { id = author.AuthorId }, author);
+            return CreatedAtAction("GetAuthor", new { id = author_.AuthorId }, author_);
         }
 
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
-            var author = await _context.Authors.FindAsync(id);
-            if (author == null)
+            try
             {
-                return NotFound();
-            }
+                var author_ = await _context.Authors.Where(x => x.AuthorId == id).FirstOrDefaultAsync();
 
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
+                author_.StateId = 2;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AuthorExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return NoContent();
         }

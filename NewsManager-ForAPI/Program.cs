@@ -16,7 +16,7 @@ namespace NewsManager_ForAPI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmArticles());
+            Application.Run(new Menu());
         }
     }
 }

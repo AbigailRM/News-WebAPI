@@ -33,6 +33,7 @@ namespace NewsManager_ForAPI
             this.ptrGetArticles = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbSeeArticles = new System.Windows.Forms.Label();
             this.btnMenu = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -57,7 +58,6 @@ namespace NewsManager_ForAPI
             this.txtContent = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.pboxClean = new System.Windows.Forms.PictureBox();
-            this.lbSeeArticles = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptrGetArticles)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxClean)).BeginInit();
@@ -98,6 +98,21 @@ namespace NewsManager_ForAPI
             this.panel1.Size = new System.Drawing.Size(1147, 100);
             this.panel1.TabIndex = 5;
             // 
+            // lbSeeArticles
+            // 
+            this.lbSeeArticles.AutoSize = true;
+            this.lbSeeArticles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.lbSeeArticles.Font = new System.Drawing.Font("MingLiU_HKSCS-ExtB", 10.8F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+                | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbSeeArticles.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.lbSeeArticles.Location = new System.Drawing.Point(148, 69);
+            this.lbSeeArticles.Name = "lbSeeArticles";
+            this.lbSeeArticles.Size = new System.Drawing.Size(141, 19);
+            this.lbSeeArticles.TabIndex = 30;
+            this.lbSeeArticles.Text = "See Articles";
+            this.lbSeeArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
+            this.lbSeeArticles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
+            // 
             // btnMenu
             // 
             this.btnMenu.BackColor = System.Drawing.Color.MediumPurple;
@@ -107,6 +122,7 @@ namespace NewsManager_ForAPI
             this.btnMenu.TabIndex = 31;
             this.btnMenu.Text = "MENU";
             this.btnMenu.UseVisualStyleBackColor = false;
+            this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
             // 
             // btnDelete
             // 
@@ -328,21 +344,6 @@ namespace NewsManager_ForAPI
             this.pboxClean.TabIndex = 29;
             this.pboxClean.TabStop = false;
             this.pboxClean.Click += new System.EventHandler(this.pboxClean_Click);
-            // 
-            // lbSeeArticles
-            // 
-            this.lbSeeArticles.AutoSize = true;
-            this.lbSeeArticles.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.lbSeeArticles.Font = new System.Drawing.Font("MingLiU_HKSCS-ExtB", 10.8F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
-                | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbSeeArticles.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lbSeeArticles.Location = new System.Drawing.Point(148, 69);
-            this.lbSeeArticles.Name = "lbSeeArticles";
-            this.lbSeeArticles.Size = new System.Drawing.Size(141, 19);
-            this.lbSeeArticles.TabIndex = 30;
-            this.lbSeeArticles.Text = "See Articles";
-            this.lbSeeArticles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
-            this.lbSeeArticles.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SeeArticles_MouseClick);
             // 
             // FrmArticles
             // 

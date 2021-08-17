@@ -39,11 +39,14 @@ namespace News_WebAPI.Controllers
                                    on articles.CountryId equals country.CountryId
                                    join language in _context.Languages
                                    on articles.LanguageId equals language.LanguageId
+                                   join sort in _context.SortBies
+                                   on articles.SortId equals sort.SortId
                                    select new
                                    {
                                        articles.ArticleId,
+                                       articles.SourceId,
                                        Source = source.SourceName,
-                                       AutorId = articles.AuthorId,
+                                       AuthorId = articles.AuthorId,
                                        Author = authors.Name + " " + authors.LastName,
                                        articles.Title,
                                        articles.Description,
@@ -59,6 +62,8 @@ namespace News_WebAPI.Controllers
                                        articles.LanguageId,
                                        LanguageCode = language.LanguageCode,
                                        LanguageName = language.Name,
+                                       articles.SortId,
+                                       Sort = sort.Name,
                                        articles.StateId
                                    }).Where(x => x.StateId == 1).ToListAsync();
             return Ok(articles_);
@@ -66,40 +71,22 @@ namespace News_WebAPI.Controllers
 
         // GET: api/Articles/5
         [ActionName(nameof(GetArticle))]
-        [HttpGet("{q}")]
+        [HttpGet("Search")]
+        //[Route("Article/Get/")]
         [AllowAnonymous]
-        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = null,/* [FromQuery]*/ string coun = null, /*[FromQuery] */string cat=null, int Id = 0)
+        public async Task<ActionResult<Article>> GetArticle(/*[FromQuery]*/ string q = "",
+            /* [FromQuery]*/ string coun = null, 
+            /*[FromQuery] */int cat=0, int Id = 0)
         {
 
-            var article_ = await (from articles in _context.Articles
-                                  join authors in _context.Authors
-                                  on articles.AuthorId equals authors.AuthorId
-                                  join category in _context.Categories
-                                  on articles.CategoryId equals category.CategoryId
-                                  join source in _context.Sources
-                                  on articles.SourceId equals source.SourceId
-                                  join country in _context.Countries
-                                  on articles.CountryId equals country.CountryId
-                                  select new
-                                  {
-                                      articles.ArticleId,
-                                      Source = source.SourceName,
-                                      AutorId = articles.AuthorId,
-                                      Author = authors.Name + " " + authors.LastName,
-                                      articles.Title,
-                                      articles.Description,
-                                      articles.Content,
-                                      articles.UrltoArticle,
-                                      articles.UrltoImage,
-                                      articles.PublishedAt,
-                                      CategoryId = category.CategoryId,
-                                      CategoryName = category.Name,
-                                      CountryId = country.CountryId,
-                                      CountryCode = country.CountryCode,
+            var article_ = await _context.Articles
+                .Include(x => x.Author).Include(x => x.Category)
+                .Include(x => x.Source).Include(x => x.Country).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q) : Id != 0
+                                      ? x.ArticleId == Id : coun != null
+                                      ? x.Country.CountryCode == coun : cat != 0
+                                      ? x.CategoryId == cat : x.Title == "");
 
-                                  }).FirstOrDefaultAsync(x => q != null ? x.Title.Contains(q): Id != 0? x.ArticleId == Id : coun != null ? x.CountryCode == coun : cat !=null? x.CategoryName == cat: x.Title=="");
 
-                
             if (article_ == null)
             {
                 return NotFound();
@@ -111,23 +98,52 @@ namespace News_WebAPI.Controllers
 
 
         // PUT: api/Articles/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutArticle(int id, Article article)
+        [HttpPut()]
+        [AllowAnonymous]
+        public async Task<IActionResult> PutArticle(Article article)
         {
-            if (id != article.ArticleId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(article).State = EntityState.Modified;
+           
+            //_context.Entry(article).State = EntityState.Modified;
 
             try
             {
+                var article_ = await _context.Articles.Where(x => x.ArticleId == article.ArticleId).FirstOrDefaultAsync<Article>();
+
+                article_.ArticleId = article.ArticleId == 0 ? article_.ArticleId : article.ArticleId;
+
+                article_.Title = article.Title == null ? article_.Title : article.Title;
+
+                article_.AuthorId = article.AuthorId == 0 ? article_.AuthorId : article.AuthorId;
+
+                article_.Description = article.Description == null ? article_.Description : article.Description;
+
+                article_.Content = article.Content == null ? article_.Content : article.Content;
+
+                article_.UrltoArticle = article.UrltoArticle == null ? article_.UrltoArticle : article.UrltoArticle;
+
+                article_.UrltoImage = article.UrltoImage == null ? article_.UrltoImage : article.UrltoImage;
+
+                article_.PublishedAt = article.PublishedAt == null ? article_.PublishedAt : article.PublishedAt;
+
+                article_.SourceId = article.SourceId == 0 ? article_.SourceId : article.SourceId;
+
+                article_.CategoryId = article.CategoryId == 0 ? article_.CategoryId : article.CategoryId;
+
+                article_.CountryId = article.CountryId == 0 ? article_.CountryId : article.CountryId;
+
+                article_.LanguageId = article.LanguageId == 0 ? article_.LanguageId : article.LanguageId;
+
+                article_.UserId = 1;
+
+                article_.CreateDate = article.CreateDate == null ? article_.CreateDate : article.CreateDate;
+
+                article_.StateId = 1;               
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ArticleExists(id))
+                if (!ArticleExists(article.ArticleId))
                 {
                     return NotFound();
                 }
@@ -137,7 +153,8 @@ namespace News_WebAPI.Controllers
                 }
             }
 
-            return NoContent();
+            //return NoContent();
+            return Ok();
         }
 
         // POST: api/Articles
@@ -167,7 +184,7 @@ namespace News_WebAPI.Controllers
             _context.Articles.Add(_article);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetArticle), new { q = _article.Title}, _article);
+            return CreatedAtAction(nameof(GetArticle), new { q = _article.Title, id = _article.ArticleId }, _article);
 
         }
 
@@ -175,14 +192,36 @@ namespace News_WebAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticle(int id)
         {
-            var article = await _context.Articles.FindAsync(id);
-            if (article == null)
-            {
-                return NotFound();
-            }
+            //var article = await _context.Articles.FindAsync(id);
+            //if (article == null)
+            //{
+            //    return NotFound();
+            //}
 
-            _context.Articles.Remove(article);
-            await _context.SaveChangesAsync();
+            //_context.Articles.Remove(article);
+            //await _context.SaveChangesAsync();
+
+            //return NoContent();
+
+            try
+            {
+                var article_ = await _context.Articles.Where(x => x.ArticleId == id).FirstOrDefaultAsync();
+
+                article_.StateId = 1;
+
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!ArticleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
             return NoContent();
         }

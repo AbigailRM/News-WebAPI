@@ -21,7 +21,8 @@ namespace NewsManager_ForAPI
 
         private static readonly HttpClient httpClient = new HttpClient();
         List<ArticlesDto> articles;
-        public int articleId = 0;
+        public int articleId;
+        public ArticlesDto article;
 
         public FrmConsultArticles()
         {
@@ -97,6 +98,7 @@ namespace NewsManager_ForAPI
         private void SendToModify_CellDoubleClick(object sender, EventArgs e)
         {
             articleId = Convert.ToInt32(dgvShowArticles[0, dgvShowArticles.CurrentRow.Index].Value);
+
             Close();
         }
     }

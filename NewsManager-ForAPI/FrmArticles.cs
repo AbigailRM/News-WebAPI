@@ -19,7 +19,9 @@ namespace NewsManager_ForAPI
     {
         static readonly HttpClient httpClient = new HttpClient();
 
-        ArticlesDto objArticle = null;
+        ArticlesDto objArticle;
+        List<ArticlesDto> articles;
+
 
         public FrmArticles()
         {
@@ -56,14 +58,24 @@ namespace NewsManager_ForAPI
                 LoadArticle(consultArticles.articleId);
         }
 
+
+        private List<ArticlesDto> GetArticles()
+        {
+            var response = httpClient.GetAsync("/api/Articles").Result;
+            var resText = response.Content.ReadAsStringAsync().Result;
+
+            articles = JsonConvert.DeserializeObject<List<ArticlesDto>>(resText);
+
+            return articles;
+        }
+
         private void LoadArticle(int articleId)
         {
             btnDelete.Enabled = true;
 
-            var response = httpClient.GetAsync("/api/Articles/null/0/0/"+articleId.ToString()).Result;
-            var resText = response.Content.ReadAsStringAsync().Result;
+            GetArticles();
 
-            objArticle = JsonConvert.DeserializeObject<ArticlesDto>(resText);
+            objArticle = articles.FirstOrDefault(x => x.ArticleId == articleId);
 
             txtContent.Text = objArticle.Content;
             txtDescription.Text = objArticle.Description;
@@ -75,7 +87,7 @@ namespace NewsManager_ForAPI
             cbCategory.SelectedValue = objArticle.CategoryId;
             cbCountry.SelectedValue = objArticle.CountryId;
             cbLanguage.SelectedValue = objArticle.LanguageId;
-            cbSource.SelectedValue = objArticle.SourceId;
+            cbSource.SelectedValue = objArticle.SourceId;            
 
         }
 
@@ -239,18 +251,18 @@ namespace NewsManager_ForAPI
                 objArticle.CountryId = cbCountry.SelectedIndex;
                 objArticle.LanguageId = cbLanguage.SelectedIndex;
                 objArticle.UserId = 1;
-                objArticle.CreateDate = DateTime.Now;
+                //objArticle.CreateDate = DateTime.Now;
 
 
                 string json = JsonConvert.SerializeObject(objArticle);
 
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                var response = httpClient.PutAsync("/api/Articles/" + objArticle.ArticleId.ToString(), content).Result;
+                var response = httpClient.PutAsync("/api/Articles", content).Result;
 
                 if (response.StatusCode == HttpStatusCode.Created || response.StatusCode == HttpStatusCode.OK)
                 {
-                    MessageBox.Show("Article Was Inserted Correctly!");
+                    MessageBox.Show("Article Was Updated Correctly!");
 
                     Clean();
                 }
@@ -282,6 +294,13 @@ namespace NewsManager_ForAPI
         private void pboxClean_Click(object sender, EventArgs e)
         {
             Clean();
+        }
+
+        private void btnMenu_Click(object sender, EventArgs e)
+        {
+            Menu menu = new Menu();
+            menu.ShowDialog();
+            this.Close();
         }
     }
 }

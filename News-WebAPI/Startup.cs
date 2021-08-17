@@ -19,6 +19,7 @@ using System.Text;
 using Octopus.Client.Repositories.Async;
 using News_WebAPI.Models;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace News_WebAPI
 {
@@ -65,7 +66,8 @@ namespace News_WebAPI
                 options.UseSqlServer(Configuration.GetConnectionString("NewsServer"));
             });
 
-            services.AddControllers();
+            //services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             //services.AddTransient<IUserRepository, >();
             //services.AddTransient<ITokenService, TokenService>();

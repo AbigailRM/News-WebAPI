@@ -64,6 +64,7 @@ namespace NewsManager_ForAPI
             this.goToAuthors.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.goToAuthors.TabIndex = 1;
             this.goToAuthors.TabStop = false;
+            this.goToAuthors.Click += new System.EventHandler(this.goToAuthors_Click);
             // 
             // goToSources
             // 
